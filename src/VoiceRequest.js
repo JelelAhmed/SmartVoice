@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Houndify from 'houndify'; 
-import axios from 'axios';
+
 
 
 let voiceRequest;
@@ -86,7 +86,7 @@ const initVoiceRequest = (sampleRate) => {
     return voiceRequest;
 }
 
-class Recorder extends Component {
+class VoiceRequest extends Component {
 
     onMicroClick = () => {
 
@@ -111,4 +111,4 @@ class Recorder extends Component {
     }
 }
 
-export default Recorder;
+export default VoiceRequest;
