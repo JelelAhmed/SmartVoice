@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Houndify from 'houndify'; 
 
 
-
 let voiceRequest;
 let conversationState;
 
@@ -29,6 +28,7 @@ function onError(err, info) {
 
 function onTranscriptionUpdate(transcript) {
     transcript = transcript.PartialTranscript;
+    console.log(transcript)
 }
 
 function onResponse(response, info) {
@@ -36,12 +36,7 @@ function onResponse(response, info) {
         //Pick and store appropriate ConversationState from the results. 
         //This example takes the default one from the first result.
         conversationState = response.AllResults[0].ConversationState;
-    }
-
-        
-        console.log(response.stringify(undefined, 2))
-       
-        console.log(JSON.stringify(info, undefined, 2));
+    }   
 }
 
 const initVoiceRequest = (sampleRate) => {
@@ -72,10 +67,11 @@ const initVoiceRequest = (sampleRate) => {
         // Partial transcript, response and error handlers
         // Partial transcript, response and error handlers
         onTranscriptionUpdate: onTranscriptionUpdate,
+
         onResponse: function(response, info) {
             recorder.stop();
             onResponse(response, info);
-            console.log(JSON.stringify(info, undefined, 2));
+            // 
         },
         onError: function(err, info) {
             recorder.stop();

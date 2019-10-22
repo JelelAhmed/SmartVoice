@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import Houndify from 'houndify';
+import ReportCard from './ReportCard';
 
 class TextRequest extends Component {
+
     state = {
-        queryString: 'what is the weather like there?',
-        SpokenResponseLong: '',
+        queryString: '.',
+        Response: '',
+        AllResults: '',
     }
 
 
@@ -13,15 +16,17 @@ class TextRequest extends Component {
     }
 
     onResponse = (response, info) => {
-                this.setState({SpokenResponseLong: response.AllResults[0].SpokenResponseLong});
-                console.log(this.state.SpokenResponseLong);
-            };
+        this.setState({
+            Response: response,
+            AllResults: response.AllResults[0]
+        });
+        console.log(this.state.Response);
+    };
 
 
 
     initTextRequest = () => {
         const { queryString } = this.state;
-        console.log(queryString);
         const textRequest = new Houndify.TextRequest({
             // Text query
             query: queryString,
@@ -76,24 +81,34 @@ class TextRequest extends Component {
 
 
     render() {
+        const { AllResults } = this.state;
         return (
+          <div className='App'>
             <div className="ui action big labeled fluid input field">
-            <input 
-                  onChange={this.onChange}
-                  id="query" 
-                  type="text" 
-                  placeholder="Click on a microphone icon or type in your query" 
-              />
-            <button 
-                    onClick={this.initTextRequest}
-                    id="textSearchButton"  
-                    className="ui icon button"
-                  > 
-               <i className="search big icon"></i>
-            </button>
+              <input 
+                    onChange={this.onChange}
+                    id="query" 
+                    type="text" 
+                    placeholder="Click on a microphone icon or type in your query" 
+                />
+              <button 
+                      onClick={this.initTextRequest}
+                      id="textSearchButton"  
+                      className="ui icon button"
+              > 
+                 <i className="search big icon"></i>
+              </button>
+            </div>
+             {  AllResults === ''
+                ? <div>
+                  </div>
+                : ( AllResults !== '',
+                    <ReportCard {...AllResults} />
+                  )
+             }    
           </div>
         )
     }
 }
 
-export default TextRequest;
+export default TextRequest
