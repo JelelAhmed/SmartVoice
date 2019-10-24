@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import Houndify from 'houndify';
 import ReportCard from './ReportCard';
+import SearchBox from './Component/SearchBox/SearchBox';
 
 class TextRequest extends Component {
 
     state = {
-        queryString: '.',
+        searchfield: '.',
         Response: '',
         AllResults: '',
     }
 
 
     onChange = (event) => {
-        this.setState({ queryString: event.target.value });
+        this.setState({ searchfield: event.target.value });
+        console.log(this.state.searchfield);
     }
 
     onResponse = (response, info) => {
@@ -25,11 +27,11 @@ class TextRequest extends Component {
 
 
 
-    initTextRequest = () => {
-        const { queryString } = this.state;
+    onClick = () => {
+        const { searchfield } = this.state;
         const textRequest = new Houndify.TextRequest({
             // Text query
-            query: queryString,
+            query: searchfield,
 
             // Your Houndify Client ID
 
@@ -80,35 +82,13 @@ class TextRequest extends Component {
     }
 
 
-    render() {
-        const { AllResults } = this.state;
-        return (
-          <div className='App'>
-            <div className="ui action big labeled fluid input field">
-              <input 
-                    onChange={this.onChange}
-                    id="query" 
-                    type="text" 
-                    placeholder="Click on a microphone icon or type in your query" 
-                />
-              <button 
-                      onClick={this.initTextRequest}
-                      id="textSearchButton"  
-                      className="ui icon button"
-              > 
-                 <i className="search big icon"></i>
-              </button>
-            </div>
-             {  AllResults === ''
-                ? <div>
-                  </div>
-                : ( AllResults !== '',
-                    <ReportCard {...AllResults} />
-                  )
-             }    
-          </div>
-        )
-    }
+  render() {
+    return (
+      <div>
+       <SearchBox onChange={this.onChange} onClick={this.onClick}/>
+      </div>
+    )
+  }
 }
 
 export default TextRequest
