@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import Houndify from 'houndify';
-import ReportCard from './ReportCard';
+import ResponseCard from './Component/ResponseCard/ResponseCard';
 import SearchBox from './Component/SearchBox/SearchBox';
 
 class TextRequest extends Component {
+
 
     state = {
         searchfield: '.',
         Response: '',
         AllResults: '',
-    }
-
+    };
 
     onChange = (event) => {
         this.setState({ searchfield: event.target.value });
@@ -27,7 +27,7 @@ class TextRequest extends Component {
 
 
 
-    onClick = () => {
+    initTextRequest = () => {
         const { searchfield } = this.state;
         const textRequest = new Houndify.TextRequest({
             // Text query
@@ -40,7 +40,7 @@ class TextRequest extends Component {
             // For testing environment you might want to authenticate on frontend without Node.js server. 
             // In that case you may pass in your Houndify Client Key instead of "authURL".
             // clientKey: "YOUR_CLIENT_KEY",
-            clientId: "GDphGQ3HonLiBJlAK_bKZg==",
+            clientId: "dZtmNkiCT30LvR6Jj2FCvw==",
 
             // Otherwise you need to create an endpoint on your server
             // for handling the authentication.
@@ -59,11 +59,9 @@ class TextRequest extends Component {
             // See https://www.houndify.com/docs#conversation-state
             conversationState: '',
 
-            // You need to create an endpoint on your server
             // for handling the authentication and proxying 
             // text search http requests to Houndify backend
-            // See SDK's server-side method HoundifyExpress.createTextProxyHandler().
-
+            
             proxy: {
                 method: 'POST',
                 url: "http://localhost:3002/textSearchProxy",
@@ -83,9 +81,19 @@ class TextRequest extends Component {
 
 
   render() {
+    const {AllResults} = this.state;
     return (
       <div>
-       <SearchBox onChange={this.onChange} onClick={this.onClick}/>
+       <SearchBox onChange={this.onChange} initTextRequest={this.initTextRequest}/>
+       <div className='pa2'>
+       {  AllResults === ''
+                ? <div>
+                  </div>
+                : ( AllResults !== '',
+                    <ResponseCard {...AllResults} Response={this.state.Response}/>
+                  )
+             }
+       </div>
       </div>
     )
   }
