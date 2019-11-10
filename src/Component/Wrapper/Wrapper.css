@@ -1,0 +1,10 @@
+.displayGrid {
+	display: inline-grid;
+	justify-content: center;
+}
+
+.wide {
+	width: 200px;
+	height: 300px;
+	background: linear-gradient(89deg, #FF5EDF 0%, #04C8DE 100%);
+}
