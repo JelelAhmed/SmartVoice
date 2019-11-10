@@ -8,3 +8,12 @@ body {
 button {
     cursor: pointer;
 }
+
+.fix {
+
+	display: contents;
+    justify-content: center;
+    font-weight: lighter;
+    text-align: center;
+}
+

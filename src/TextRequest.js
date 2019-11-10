@@ -85,7 +85,7 @@ class TextRequest extends Component {
     return (
       <div>
        <SearchBox onChange={this.onChange} initTextRequest={this.initTextRequest}/>
-       <div className='pa2'>
+       <div className=''>
        {  AllResults === ''
                 ? <div>
                   </div>

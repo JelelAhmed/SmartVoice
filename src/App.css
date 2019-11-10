@@ -1,9 +1,5 @@
-/*.App {
-	text-align: center;
-}*/
-
-div {
-	display: contents;
+.App {
+	  display: contents;
     justify-content: center;
     font-weight: lighter;
     text-align: center;

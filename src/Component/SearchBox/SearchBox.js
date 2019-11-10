@@ -3,7 +3,7 @@ import './SearchBox.css';
 
 const SearchBox = ({onChange, initTextRequest}) => {
 	return (
-		<div className="ui action big labeled fluid input field pa4 center br3 shadow-5">
+		<div className="box-width ui action big labeled fluid input field pa4 center br3 shadow-5">
 		    <input 
 	        id="query"
 	        type="text"
