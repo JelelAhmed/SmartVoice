@@ -1,29 +1,17 @@
 import React from 'react'
 import './ResponseCard.css';
 
-const ResponseCard = ({Response, CommandKind, SpokenResponseLong, WrittenResponseLong}) => {
+const ResponseCard = ({Response, onSavedResponse, clearResponse, CommandKind, SpokenResponseLong, WrittenResponseLong}) => {
 
-	if (CommandKind === 'KnowledgeCommand') {
-		 CommandKind = "Knowledge Command";
-	}
-	return (
-        <article className= 'card ba br3 dark-gray b--black-10 mw6 shadow-5 center'>
-		  <ul className="list br6 pl0 mw6 center">
-		   <li className="pv4 ba br3 bl-0 bt-0 br-0 b--line b--black-30 center tc f2">Report Card</li>
-		    <li className="tl f4 lh-copy pv3 ba br3 bl-0 bt-0 br-0 b--line b--black-30">Status:
-		      <p className='para'>{Response.Status}</p>
-		    </li>
-		    <li className="tl f4 lh-copy pv3 ba br3 bl-0 bt-0 br-0 b--line b--black-30">Command Kind:
-		      <p className='para'>{CommandKind}</p>
-		    </li>
-		    <li className="tl f4 lh-copy pv3 ba br3 bl-0 bt-0 br-0 b--line b--black-30">Spoken Response:
-		      <p className='para'>{SpokenResponseLong}</p>
-		    </li>
-		    <li className="tl f4 lh-copy pv3 br3 bl-0 bt-0 br-0 b--line b--black-30">Written Response:
-		     <p className='para'>{WrittenResponseLong}</p>		    
-		    </li>
-		  </ul>
-		</article>
+    console.log(Response);
+	return ( 
+		<div className='fontStyle box white f4'> 
+			<div className='fontStyle pa2'>{Response}</div>
+   		 <div className='ui two buttons buttonStyle pa2'>
+   	 		<button onClick={onSavedResponse} className= 'ui basic green button pa2'>Save</button>
+   	 		<button onClick={() => clearResponse('')} className='ui basic red button pa2'>Discard</button>
+    	</div>
+  	</div>
 	)
 }
 

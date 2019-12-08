@@ -22,3 +22,27 @@ li {
     font-family: "Courier New", Courier, monospace;
     background: linear-gradient(89deg, #FF5EDF 0%, #04C8DE 100%);
 }
+
+
+.buttonStyle {
+  display: inline-block;
+  padding-top: 6px;
+  max-width: 300px;
+}
+
+button {
+  margin: 20px
+}
+
+.line {
+/*  border-bottom: 2px solid #eee;*/
+}
+
+.box {
+  display: inline-block;
+  margin: 10px;
+  border-top: 1px solid magenta;
+  border-bottom: 1px solid cyan;
+  max-width: 650px;
+  padding: 20px;
+}

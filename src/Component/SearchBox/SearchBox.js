@@ -7,7 +7,7 @@ const SearchBox = ({onChange, initTextRequest}) => {
 		    <input 
 	        id="query"
 	        type="text"
-	        placeholder="Ask me anything!"
+	        placeholder="eg: what's the weather like in Lagos!"
 	        onChange={onChange} 
 		    />
 		    <button 

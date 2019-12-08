@@ -19,8 +19,33 @@ class App extends Component {
       route: 'signin',
       isSignedIn: 'false',
       command: null,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        history: [],
+        legend: 0,
+        joined: ''
+      }
     }
-  } 
+  }
+
+  loadUser = (data) => {
+    this.setState({user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      history: data.history,
+      legend: data.legend,
+      joined: data.joined
+    }})
+  }
+
+  upDateCount = (count) => {
+    this.setState(Object.assign(this.state.user, {
+      legend: count
+    }))
+  }
 
   onRouteChange = (route) => {
     if (route === 'signout') {
@@ -48,17 +73,17 @@ class App extends Component {
               { route === 'home'
                 ? (
                    command === null 
-                   ? <SelectCommand onCommandChange={this.onCommandChange}/>
+                   ? <SelectCommand name={this.state.user.name} onCommandChange={this.onCommandChange}/>
                    : (
                       command === 'search'
-                      ? <TextRequest />
+                      ? <TextRequest user={this.state.user} upDateCount={this.upDateCount}/>
                       : <VoiceRequest />
                       )
                   )           
                 : (
                   this.state.route === 'signin' 
-                  ? <SignIn onRouteChange={this.onRouteChange} />
-                  : <Register onRouteChange={this.onRouteChange} />
+                  ? <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+                  : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
                   )
               }
             </div>

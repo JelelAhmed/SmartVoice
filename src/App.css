@@ -5,12 +5,17 @@
     text-align: center;
 }
 
+.border-history {
+    border-top: 4px solid magenta;
+    padding-top: 3px;
+}
+
 .coolTitle {
   text-align: center;
   font-family: 'Oswald', Helvetica, sans-serif;
-  font-size: 50px;
+  font-size: 40px;
 
-  padding-top: 10px;
+  padding-top: 6px;
 
   letter-spacing: 4px;
   word-spacing: -8px;
