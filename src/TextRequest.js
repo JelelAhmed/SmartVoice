@@ -11,7 +11,8 @@ class TextRequest extends Component {
         searchfield: '.',
         Response: '',
         AllResults: '',
-        userHistory: '',
+        userHistory: [],
+        savedResponse: [],
         history: null
     };
 
@@ -53,7 +54,11 @@ class TextRequest extends Component {
       })
         .then(response => response.json())
         .then(history => {
-          this.setState({userHistory: history})
+          console.log(history);
+          this.setState({
+            userHistory: history,
+            savedResponse: history
+          })
         })
         
       this.setState({history: boolean});
@@ -71,7 +76,7 @@ class TextRequest extends Component {
         })
           .then(response => response.json())
           .then(saved => {
-            console.log(saved)
+            console.log(saved, 'saved')
           })
       };
     }
@@ -151,11 +156,12 @@ class TextRequest extends Component {
 
   render() {
     const {user} = this.props;
-    const {AllResults, history, Response, userHistory} = this.state;
+    const {AllResults, history, Response, userHistory, savedResponse} = this.state;
+    console.log(savedResponse, 'savedResponse');
     return ( 
       <div>
         { history === true
-          ? <History onGetHistory={this.onGetHistory} userHistory={userHistory} {...user} />
+          ? <History onGetHistory={()=>this.onGetHistory()} userHistory={user} {...user} savedResponse={savedResponse} />
           : <div>
               <div>
                 <p onClick={()=> this.onGetHistory(true)}
