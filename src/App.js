@@ -7,7 +7,6 @@ import Register from './Component/Register/Register';
 import SelectCommand from './Component/SelectCommand/SelectCommand';
 import VoiceRequest from './VoiceRequest';
 import TextRequest from './TextRequest';
-import Objects from './Objects'
 import './App.css';
 
 
