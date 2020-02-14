@@ -30,18 +30,19 @@ class History extends React.Component {
 
 
 render() {
-  const { onGetHistory, name, savedResponse }  = this.props;
+  const { onGetHistory, name, savedResponse, searchField}  = this.props;
   const { count } = this.state;
   console.log(savedResponse.length, 'history')
   return (
     <div className=''>
       <p onClick={onGetHistory}
          className='tr b2 link f3 white border-history underline pr3 pointer'>Get Smarter!</p>
-      <p className='f3 white'>{`${name} Relearn Previous Queries`}</p>
-      <p className='f4 white'>{`You have ${savedResponse.length} saved responses to Relearn!`}</p>
+      <p className='f4 white'>{`${name}, you have ${savedResponse.length} saved responses to relearn!`}</p>
       <div className='f2 bold'>
         { savedResponse.length
-         ? `${count+1} of ${savedResponse.length}`
+         ? <div>{`${count+1} of ${savedResponse.length}`}
+                <p className='black light f3 pt2'>{savedResponse[count].query}</p>
+           </div>
          : ''
         }
       </div>

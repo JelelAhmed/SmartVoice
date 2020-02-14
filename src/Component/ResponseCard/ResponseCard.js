@@ -2,8 +2,7 @@ import React from 'react'
 import './ResponseCard.css';
 
 const ResponseCard = ({Response, onSavedResponse, clearResponse, CommandKind, SpokenResponseLong, WrittenResponseLong}) => {
-
-    console.log(Response);
+ 
 	return ( 
 		<div className='fontStyle box white f4'> 
 			<div className='fontStyle pa2'>{Response}</div>
