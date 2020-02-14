@@ -1,0 +1,8 @@
+
+.spinner-style {
+	display: inline-grid;
+	justify-content: center;
+	width: 200px;
+	height: 300px;
+	background: inherit;
+}
