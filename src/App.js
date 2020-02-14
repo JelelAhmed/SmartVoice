@@ -23,8 +23,8 @@ class App extends Component {
         id: '',
         name: '',
         email: '',
-        history: [],
         legend: 0,
+        history: [],
         joined: ''
       }
     }
@@ -36,7 +36,7 @@ class App extends Component {
       name: data.name,
       email: data.email,
       history: data.history,
-      legend: data.legend,
+      legend: data.entries,
       joined: data.joined
     }})
   }
