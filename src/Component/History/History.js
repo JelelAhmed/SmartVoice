@@ -40,7 +40,7 @@ render() {
       <p className='f4 white'>{`${name}, you have ${savedResponse.length} saved responses to relearn!`}</p>
       <div className='f2 bold'>
         { savedResponse.length
-         ? <div>{`${count+1} of ${savedResponse.length}`}
+         ? <div className='pt3'>{`${count+1} of ${savedResponse.length}`}
                 <p className='black light f3 pt2'>{savedResponse[count].query}</p>
            </div>
          : ''

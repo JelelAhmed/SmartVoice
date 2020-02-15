@@ -12,7 +12,7 @@ let SpokenResponse;
 class TextRequest extends Component {
 
     state = {
-        searchField: '.',
+        searchField: '',
         response:'',
         Response: '',
         AllResults: '',
@@ -20,6 +20,7 @@ class TextRequest extends Component {
         savedResponse: [],
         isSearching: false,
         isError: false,
+        errorMessage: '',
         history: null
     };
 
@@ -32,8 +33,9 @@ class TextRequest extends Component {
       this.setState({ Response: clear});
     }
 
-
-
+    errorFeedback = (errorMessage) => {
+      return errorMessage;
+    }
 
     onResponse = (response, info) => {
       this.setState({
@@ -99,74 +101,83 @@ class TextRequest extends Component {
     }
 
 
-     initTextRequest = () => {
+    initTextRequest = () => {
 
         const { searchField } = this.state;
         this.setState({
           isSearching: true,
           isError: false
         })
-        const textRequest = new Houndify.TextRequest({
-            // Text query
-            query: searchField,
+        this.clearResponse('');
 
-            // Your Houndify Client ID
+        if (searchField !== '') {
+            const textRequest = new Houndify.TextRequest({
+                // Text query
+                query: searchField,
+
+                // Your Houndify Client ID
 
 
 
-            // For testing environment you might want to authenticate on frontend without Node.js server. 
-            // In that case you may pass in your Houndify Client Key instead of "authURL".
-            // clientKey: "YOUR_CLIENT_KEY",
-            clientId: "dZtmNkiCT30LvR6Jj2FCvw==",
+                // For testing environment you might want to authenticate on frontend without Node.js server. 
+                // In that case you may pass in your Houndify Client Key instead of "authURL".
+                // clientKey: "YOUR_CLIENT_KEY",
+                clientId: "dZtmNkiCT30LvR6Jj2FCvw==",
 
-            // Otherwise you need to create an endpoint on your server
-            // for handling the authentication.
-            // See SDK's server-side method HoundifyExpress.createAuthenticationHandler().
-            // clientKey: "QbRXbiJP9ZSVg13bXa0a3xeD9wz-Tu5ft2afYUYc0zWYHnFlnEW7EFpMWDaFd4Va25mVajfVvjewul_P-7ZoXw==",
-            authURL: "http://localhost:3002/houndifyAuth",
-            // Request Info JSON
-            // See https://houndify.com/reference/RequestInfo
-            requestInfo: {
-                UserID: "test_user",
-                Latitude: 37.388309,
-                Longitude: -121.973968,
-                ResponseAudioVoice: "Judy",
-                ResponseAudioShortOrLong: "Short",
-            },
+                // Otherwise you need to create an endpoint on your server
+                // for handling the authentication.
+                // See SDK's server-side method HoundifyExpress.createAuthenticationHandler().
+                // clientKey: "QbRXbiJP9ZSVg13bXa0a3xeD9wz-Tu5ft2afYUYc0zWYHnFlnEW7EFpMWDaFd4Va25mVajfVvjewul_P-7ZoXw==",
+                authURL: "http://localhost:3002/houndifyAuth",
+                // Request Info JSON
+                // See https://houndify.com/reference/RequestInfo
+                requestInfo: {
+                    UserID: "test_user",
+                    Latitude: 37.388309,
+                    Longitude: -121.973968,
+                    ResponseAudioVoice: "Judy",
+                    ResponseAudioShortOrLong: "Short",
+                },
 
-            // Pass the current ConversationState stored from previous queries
-            // See https://www.houndify.com/docs#conversation-state
-            conversationState: '',
+                // Pass the current ConversationState stored from previous queries
+                // See https://www.houndify.com/docs#conversation-state
+                conversationState: '',
 
-            // for handling the authentication and proxying 
-            // text search http requests to Houndify backend
-            
-            proxy: {
-                method: 'POST',
-                url: "http://localhost:3002/textSearchProxy",
-                // headers: {}
-                // ... More proxy options will be added as needed
-            },
+                // for handling the authentication and proxying 
+                // text search http requests to Houndify backend
+                
+                proxy: {
+                    method: 'POST',
+                    url: "http://localhost:3002/textSearchProxy",
+                    // headers: {}
+                    // ... More proxy options will be added as needed
+                },
 
-            // Response and error handlers
-            onResponse: this.onResponse,
+                // Response and error handlers
+                onResponse: this.onResponse,
 
-            onError: (err, info) => {
-              this.setState({
-                isSearching: false,
-                isError: true
-              })
-              console.log(err);
-            }
-        });
-
+                onError: (err, info) => {
+                  this.setState({
+                    isSearching: false,
+                    errorMessage: 'Please check your internet connection!',
+                    isError: true
+                  })
+                  console.log(err);
+                }
+            });
+        } else {
+            this.setState({
+              isError: true,
+              errorMessage: 'Search Box Cannot be empty'
+            })
+          }
     }  
 
 
 
   render() {
     const {user} = this.props;
-    const {AllResults, history, Response, userHistory, savedResponse, searchField, isSearching, isError} = this.state;
+    const {AllResults, history, Response, userHistory, savedResponse, searchField, isSearching, isError, errorMessage} = this.state;
     console.log(savedResponse, 'savedResponse', user.name, user.legend, user.id);
     return ( 
       <div>
@@ -189,7 +200,7 @@ class TextRequest extends Component {
                        ? ( <div> 
                               { isSearching === true
                                 ? <div className='tc'> 
-                                   <Spinner type={'bubbles'}/>             
+                                   <Spinner type={'bubbles'} color={'#131313'}/>             
                                   </div>
                                 : <div></div>
                               }
@@ -205,7 +216,7 @@ class TextRequest extends Component {
                     )
                   : <div className='mt4 pa3'>
                      <p className='f4 tc white'>Ooops!!! Something went wrong.<br />
-                      Please, check your internet connection and try again!
+                       {this.errorFeedback(errorMessage)}
                      </p>
                     </div>                 
                 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Houndify from 'houndify';
-import ResponseCard from './Component/ResponseCard/ResponseCard';
+import ResponseVoice from './Component/ResponseVoice/ResponseVoice';
 import TranscriptUpdate from './Component/TranscriptUpdate/TranscriptUpdate';
 import Spinner from './Component/Spinner/Spinner';
 import MicIcon from './Component/MicIcon/MicIcon';
@@ -138,19 +138,19 @@ onMicroClick = () => {
     const {AllResults, transcript, isRecording, isError} = this.state;
     return (
       <div className="tc">
-        <p className='pa3 pointer dim grow' onClick={()=> this.onMicroClick()}>
+        <div className='pa3 pointer dim grow' onClick={()=> this.onMicroClick()}>
            <MicIcon />
-        </p>
+        </div>
         { isError === false
           ? ( <div>
                 { transcript === ''
                   ? <div></div>
                   : <TranscriptUpdate transcript={transcript} />}        
-                <div className='mt5'>
+                <div className='mt4'>
                   { isRecording === true
                     ? ( AllResults === ''
                         ? <Spinner type={'bubbles'} color={'grey'} height={'10%'} width={'10%'}/>
-                        : <ResponseCard {...AllResults} Response={this.state.Response}/>    
+                        : <ResponseVoice {...AllResults} Response={this.state.Response}/>    
                       )
                     : <div className='f2'>Click on the microphone to begin recording</div>
                   }
