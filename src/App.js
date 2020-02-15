@@ -81,28 +81,28 @@ class App extends Component {
   render(){
     const { route, isSignedIn, command} = this.state;
     return (
-      <div className='App'>
-        <Particles className='particles' params={particleOptions} />
-          <h2 className="coolTitle">SmartVoice</h2>
-            <div>
-              <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} onCommandChange={this.onCommandChange} command={command} />
-              { route === 'home'
-                ? (
-                   command === null 
-                   ? <SelectCommand name={this.state.user.name} onCommandChange={this.onCommandChange}/>
-                   : (
-                      command === 'search'
-                      ? <TextRequest user={this.state.user} upDateCount={this.upDateCount}/>
-                      : <VoiceRequest />
-                      )
-                  )           
-                : (
-                  this.state.route === 'signin' 
-                  ? <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-                  : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-                  )
-              }
-            </div>
+      <div className='App'>           
+        <h2 className="coolTitle">SmartVoice</h2>
+        <Particles className='particles' params={particleOptions} />                    
+          <div>
+            <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} onCommandChange={this.onCommandChange} command={command} />
+            { route === 'home'
+              ? (
+                 command === null 
+                 ? <SelectCommand name={this.state.user.name} onCommandChange={this.onCommandChange}/>
+                 : (
+                    command === 'search'
+                    ? <TextRequest user={this.state.user} upDateCount={this.upDateCount}/>
+                    : <VoiceRequest />
+                    )
+                )           
+              : (
+                this.state.route === 'signin' 
+                ? <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+                : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+                )
+            }
+          </div>
       </div>
       
     );
