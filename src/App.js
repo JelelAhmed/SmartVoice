@@ -7,10 +7,25 @@ import Register from './Component/Register/Register';
 import SelectCommand from './Component/SelectCommand/SelectCommand';
 import VoiceRequest from './VoiceRequest';
 import TextRequest from './TextRequest';
+import Particles from 'react-particles-js';
 import './App.css';
 
-
-
+const particleOptions = {
+  particles: {
+    number: {
+      value: 40,
+      density: {
+        enable: true,
+        value_area: 800
+      }
+    },
+    shape: {
+      stroke: {
+        width: 2
+      }
+    }   
+  }
+}
 
 class App extends Component {
   constructor(props){
@@ -67,6 +82,7 @@ class App extends Component {
     const { route, isSignedIn, command} = this.state;
     return (
       <div className='App'>
+        <Particles className='particles' params={particleOptions} />
           <h2 className="coolTitle">SmartVoice</h2>
             <div>
               <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} onCommandChange={this.onCommandChange} command={command} />
