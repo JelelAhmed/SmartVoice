@@ -146,7 +146,7 @@ class VoiceRequest extends Component {
                 <div className='mt4'>
                   { isRecording === true
                     ? ( AllResults === ''
-                        ? <Spinner type={'bubbles'} color={'grey'} height={'10%'} width={'10%'}/>
+                        ? <Spinner type={'bars'} color={'grey'}/>
                         : <ResponseVoice {...AllResults} Response={this.state.Response}/>    
                       )
                     : <div className='f2'>Click on the microphone to begin recording</div>
@@ -156,7 +156,7 @@ class VoiceRequest extends Component {
               )
           : <div className='f2 white pa4'>
               <p className='f1'>Ooops!!! <br />...Something Went Wrong.</p> 
-              <p>please, check you internet connection and try again!</p>
+              <p className='light orange'>please, check you internet connection and try again!</p>
             </div>
         }
       </div>

@@ -1,7 +1,17 @@
 .spinner-style {
-	display: inline-grid;
-	justify-content: center;
-	width: 200px;
-	height: 300px;
-	background: inherit;
+	position: fixed;
+	left: 50%;
+	right: 50%;
+	margin-top: -187.5px;
+	margin-left: -187.5px;
+	top: 500px;
 }
+
+/*.particles {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}*/

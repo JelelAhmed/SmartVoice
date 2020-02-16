@@ -178,9 +178,9 @@ class TextRequest extends Component {
                   ? (  Response === ''
                        ? ( <div> 
                               { isSearching === true
-                                ? <div className='tc'> 
-                                   <Spinner type={'bubbles'} color={'#131313'}/>             
-                                  </div>
+                                ? <div className='tc spinner-style'> 
+                                    <Spinner type={'cylon'} color={'grey'}/>
+                                  </div>            
                                 : <div></div>
                               }
                             </div>
@@ -194,7 +194,7 @@ class TextRequest extends Component {
                           ) 
                     )
                   : <div className='mt4 pa3'>
-                     <p className='f4 tc white'>Ooops!!! Something went wrong.<br />
+                     <p className='f3 tc orange bold'>Ooops!!! Something went wrong.<br />
                        {this.errorFeedback(errorMessage)}
                      </p>
                     </div>                 
