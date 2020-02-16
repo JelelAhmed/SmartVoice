@@ -6,8 +6,8 @@ import './SelectCommand.css'
 
 const SelectCommand = ({onCommandChange, name}) => {
 
-	const voiceMessage = `Perform a Speech to Text Operation Using Your Device's Microphone`;
-	const textMessage = 'Query Knowledge on Weather, News, People, Countries, Events and lots more!'
+	const voiceMessage = `Perform a Speech to Text Operation Using Your Device's Microphone. Converse With SmartVoice!`;
+	const textMessage = 'Query Knowledge on Weather, News, History, People, Facts, Music, Countries, Events! Anything'
   const voice = 'voice';
   const text = 'search';
 
@@ -21,7 +21,7 @@ const SelectCommand = ({onCommandChange, name}) => {
 				  	onCommandChange={onCommandChange}
 				  	command={voice} 
 				  	message={voiceMessage}>				  	
-				  	<VoiceLogo/>
+				   <VoiceLogo/>
 				  </Wrapper>
 				  <Wrapper 
 				  	onCommandChange={onCommandChange}

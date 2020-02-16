@@ -10,5 +10,4 @@ const Spinner = ({ type, color }) => {
 	)
 }
 
-
 export default Spinner;

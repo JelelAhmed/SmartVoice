@@ -1,7 +1,6 @@
 import React from 'react';
 
-const Rank = ({name, legend}) => {
-	
+const Rank = ({name, legend}) => {	
   return (
   	<div className='white f3'>
 	  	<div className=''>

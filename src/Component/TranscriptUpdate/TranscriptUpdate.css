@@ -1,0 +1,11 @@
+.fix {
+  font-family: "Courier New", Courier, monospace;
+  display: contents;
+  font-weight: lighter;
+  text-align: center;
+  width: 200px;
+  word-wrap: inherit;
+  font-style: italic;
+  padding-top: 6px;
+  color: cyan;
+}

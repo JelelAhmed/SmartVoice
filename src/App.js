@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import 'tachyons';
 import Navigation from './Component/Navigation/Navigation';
-import SearchBox from './Component/SearchBox/SearchBox';
 import SignIn from './Component/SignIn/SignIn';
 import Register from './Component/Register/Register';
 import SelectCommand from './Component/SelectCommand/SelectCommand';

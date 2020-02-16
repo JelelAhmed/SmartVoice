@@ -1,8 +1,8 @@
 .App {
-	  display: contents;
-    justify-content: center;
-    font-weight: lighter;
-    text-align: center;
+  display: contents;
+  justify-content: center;
+  font-weight: lighter;
+  text-align: center;
 }
 
 .particles {
@@ -15,8 +15,8 @@
 }
 
 .border-history {
-    border-top: 4px solid magenta;
-    padding-top: 3px;
+  border-top: 4px solid magenta;
+  padding-top: 3px;
 }
 
 .coolTitle {

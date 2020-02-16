@@ -6,184 +6,163 @@ import History from './Component/History/History';
 import Rank from './Component/Rank/Rank';
 import Spinner from './Component/Spinner/Spinner';
 
-let audio;
-let SpokenResponse;
 
 class TextRequest extends Component {
 
-    state = {
-        searchField: '',
-        response:'',
-        Response: '',
-        AllResults: '',
-        userHistory: [],
-        savedResponse: [],
-        isSearching: false,
-        isError: false,
-        errorMessage: '',
-        history: null
-    };
+  state = {
+	  searchField: '',
+	  Response: '',      
+	  savedResponse: [],
+	  isSearching: false,
+	  isError: false,
+	  errorMessage: '',
+	  history: null
+  };
 
-    onChange = (event) => {
-        this.setState({ searchField: event.target.value });
-        console.log(this.state.searchField);
-    }
+  onChange = (event) => {
+  	this.setState({ searchField: event.target.value })
+  }
 
-    clearResponse = (clear) => {
-      this.setState({ Response: clear});
-    }
+  clearResponse = (clear) => {
+  	this.setState({ Response: clear})
+  }
 
-    errorFeedback = (errorMessage) => {
-      return errorMessage;
-    }
+  errorFeedback = (errorMessage) => {
+  	return errorMessage;
+  }
 
-    onResponse = (response, info) => {
+  onError = (err, info) => {
+    this.setState({
+      isSearching: false,
+      errorMessage: 'Please check your internet connection!',
+      isError: true
+    })
+    console.log(err);
+  }
+
+  onResponse = (response, info) => {
+    this.setState({
+    	Response: response.AllResults[0].WrittenResponseLong,
+      isSearching: false
+    });
+
+    fetch('http://localhost:3002/queryCount', {
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        id: this.props.user.id
+      })
+    })
+    .then(response => response.json())
+    .then(count => {
+    	this.props.upDateCount(count);
+    })
+    .catch(console.log)
+  };
+
+	onGetHistory = (boolean) => {
+  	const { id } = this.props.user;
+    fetch(`http://localhost:3002/history/${id}`, {
+      method: 'get',
+      headers: {'Content-Type': 'application/json'},
+    })
+    .then(response => response.json())
+    .then(history => {
       this.setState({
-            Response: response.AllResults[0].WrittenResponseLong,
-            AllResults: response.AllResults[0],
-            response: response,
-            isSearching: false,
-        });
-
-      fetch('http://localhost:3002/queryCount', {
-        method: 'put',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          id: this.props.user.id
-        })
+      	savedResponse: history
       })
-        .then(response => response.json())
-        .then(count => {
-          this.props.upDateCount(count);
-        })
-    };
+    })
+    .catch(console.log)
+    this.setState({history: boolean});
+  }
 
-    onGetHistory = (boolean) => {
-      const { id } = this.props.user;
-      fetch(`http://localhost:3002/history/${id}`, {
-        method: 'get',
-        headers: {'Content-Type': 'application/json'},
-      })
-        .then(response => response.json())
-        .then(history => {
-          console.log(history);
-          this.setState({
-            userHistory: history,
-            savedResponse: history
-          })
-        })
-        
-      this.setState({history: boolean});
-    }
-
-
-
-    audio = new Audio('without method');
-
-    onSavedResponse =()=> {
-      console.log(this.state.response);
-      // this.audio.play();
-      if (this.state.Response !== '') {
-        fetch('http://localhost:3002/saveResponse', {
-          method: 'post',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            id: this.props.user.id,
-            query: this.state.searchField,
-            writtenResponse: this.state.Response
-          })
-        })
-          .then(response => response.json())
-          .then(saved => {
-            console.log(saved, 'saved')
-          })
-      };
-    }
+	onSavedResponse =()=> {
+	  if (this.state.Response !== '') {
+	    fetch('http://localhost:3002/saveResponse', {
+	      method: 'post',
+	      headers: {'Content-Type': 'application/json'},
+	      body: JSON.stringify({
+	        id: this.props.user.id,
+	        query: this.state.searchField,
+	        writtenResponse: this.state.Response
+	      })
+	    })
+	    .then(response => response.json())
+	    .then(saved => {
+	    	console.log(saved, 'saved')
+	    })
+	    .catch(console.log);
+	  };
+  }
 
 
-    initTextRequest = () => {
+	initTextRequest = () => {
+  	const { searchField } = this.state;
+    this.setState({
+      isSearching: true,
+      isError: false
+    });
+    this.clearResponse('');
+    if (searchField !== '') {
+    	const textRequest = new Houndify.TextRequest({
+      	// Text query
+      	query: searchField,
+      	 
+        // Your Houndify Client ID
 
-        const { searchField } = this.state;
+        // For testing environment you might want to authenticate on frontend without Node.js server. 
+        // In that case you may pass in your Houndify Client Key instead of "authURL".
+        // clientKey: "YOUR_CLIENT_KEY",
+        clientId: "dZtmNkiCT30LvR6Jj2FCvw==",
+
+        // Otherwise you need to create an endpoint on your server
+        // for handling the authentication.
+        // See SDK's server-side method HoundifyExpress.createAuthenticationHandler().
+        // clientKey: "QbRXbiJP9ZSVg13bXa0a3xeD9wz-Tu5ft2afYUYc0zWYHnFlnEW7EFpMWDaFd4Va25mVajfVvjewul_P-7ZoXw==",
+        authURL: "http://localhost:3002/houndifyAuth",
+        // Request Info JSON
+        // See https://houndify.com/reference/RequestInfo
+        requestInfo: {
+          UserID: "test_user",
+          Latitude: 37.388309,
+          Longitude: -121.973968,
+        },
+
+        // Pass the current ConversationState stored from previous queries
+        // See https://www.houndify.com/docs#conversation-state
+
+        // for handling the authentication and proxying 
+        // text search http requests to Houndify backend
+          
+        proxy: {
+          method: 'POST',
+          url: "http://localhost:3002/textSearchProxy",
+          // headers: {}
+          // ... More proxy options will be added as needed
+        },
+
+        // Response and error handlers
+        onResponse: this.onResponse,
+
+        onError: this.onError,
+      });
+    } else {
         this.setState({
-          isSearching: true,
-          isError: false
+          isError: true,
+          errorMessage: 'Search Box Cannot be empty'
         })
-        this.clearResponse('');
-
-        if (searchField !== '') {
-            const textRequest = new Houndify.TextRequest({
-                // Text query
-                query: searchField,
-
-                // Your Houndify Client ID
-
-
-
-                // For testing environment you might want to authenticate on frontend without Node.js server. 
-                // In that case you may pass in your Houndify Client Key instead of "authURL".
-                // clientKey: "YOUR_CLIENT_KEY",
-                clientId: "dZtmNkiCT30LvR6Jj2FCvw==",
-
-                // Otherwise you need to create an endpoint on your server
-                // for handling the authentication.
-                // See SDK's server-side method HoundifyExpress.createAuthenticationHandler().
-                // clientKey: "QbRXbiJP9ZSVg13bXa0a3xeD9wz-Tu5ft2afYUYc0zWYHnFlnEW7EFpMWDaFd4Va25mVajfVvjewul_P-7ZoXw==",
-                authURL: "http://localhost:3002/houndifyAuth",
-                // Request Info JSON
-                // See https://houndify.com/reference/RequestInfo
-                requestInfo: {
-                    UserID: "test_user",
-                    Latitude: 37.388309,
-                    Longitude: -121.973968,
-                    ResponseAudioVoice: "Judy",
-                    ResponseAudioShortOrLong: "Short",
-                },
-
-                // Pass the current ConversationState stored from previous queries
-                // See https://www.houndify.com/docs#conversation-state
-                conversationState: '',
-
-                // for handling the authentication and proxying 
-                // text search http requests to Houndify backend
-                
-                proxy: {
-                    method: 'POST',
-                    url: "http://localhost:3002/textSearchProxy",
-                    // headers: {}
-                    // ... More proxy options will be added as needed
-                },
-
-                // Response and error handlers
-                onResponse: this.onResponse,
-
-                onError: (err, info) => {
-                  this.setState({
-                    isSearching: false,
-                    errorMessage: 'Please check your internet connection!',
-                    isError: true
-                  })
-                  console.log(err);
-                }
-            });
-        } else {
-            this.setState({
-              isError: true,
-              errorMessage: 'Search Box Cannot be empty'
-            })
-          }
-    }  
+      }
+  }  
 
 
 
   render() {
-    const {user} = this.props;
-    const {AllResults, history, Response, userHistory, savedResponse, searchField, isSearching, isError, errorMessage} = this.state;
-    console.log(savedResponse, 'savedResponse', user.name, user.legend, user.id);
+    const { user } = this.props;
+    const { history, Response, savedResponse, searchField, isSearching, isError, errorMessage } = this.state;
     return ( 
       <div>
         { history === true
-          ? <History onGetHistory={()=>this.onGetHistory()} 
-                     userHistory={user} 
+          ? <History onGetHistory={()=>this.onGetHistory()}  
                      {...user} 
                      savedResponse={savedResponse}
                      searchField={searchField} />
@@ -207,7 +186,7 @@ class TextRequest extends Component {
                             </div>
                           )
                        : (
-                           <ResponseCard {...AllResults} 
+                           <ResponseCard
                              Response={this.state.Response} 
                              clearResponse={this.clearResponse}
                              onSavedResponse={this.onSavedResponse}
@@ -228,4 +207,4 @@ class TextRequest extends Component {
   }
 }
 
-export default TextRequest
+export default TextRequest;

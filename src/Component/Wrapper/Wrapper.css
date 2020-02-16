@@ -1,9 +1,9 @@
-.displayGrid {
+.position {
 	display: inline-grid;
 	justify-content: center;
 }
 
-.wide {
+.dimension {
 	width: 200px;
 	height: 300px;
 }

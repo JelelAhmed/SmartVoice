@@ -12,28 +12,28 @@ let conversationState;
 const recorder = new Houndify.AudioRecorder();
 
 recorder.on('data', (data) => {
-    voiceRequest.write(data);
+  voiceRequest.write(data);
 });
 
 recorder.on('end', () => {
-    voiceRequest.end();
+  voiceRequest.end();
 });
 
 recorder.on('error', (error) => {
-    voiceRequest.abort();
+  voiceRequest.abort();
 });
 
 const onError = (err, info) => {
-    console.log(err);
+  console.log(err);
 }
 
  
 
 const onResponse = (response, info) => {
   if (response.AllResults && response.AllResults.length) {
-      //Pick and store appropriate ConversationState from the results. 
-      //This example takes the default one from the first result.
-      conversationState = response.AllResults[0].ConversationState;
+    //Pick and store appropriate ConversationState from the results. 
+    //This example takes the default one from the first result.
+    conversationState = response.AllResults[0].ConversationState;
   }
 }
 
@@ -44,102 +44,99 @@ class VoiceRequest extends Component {
     super(props);
 
     this.state = {
-        Response: '',
-        AllResults: '',
-        transcript: '',
-        isRecording: false,
-        isError: false
+      Response: '',
+      AllResults: '',
+      transcript: '',
+      isRecording: false,
+      isError: false
     };
 
     recorder.on('start', () => {
      voiceRequest = initVoiceRequest(recorder.sampleRate);
     });
 
-
     const initVoiceRequest = (sampleRate) => {
 
       var voiceRequest = new Houndify.VoiceRequest({
-          // Houndify Client ID
-          clientId: "dZtmNkiCT30LvR6Jj2FCvw==",
+        // Houndify Client ID
+        clientId: "dZtmNkiCT30LvR6Jj2FCvw==",
 
-          // server endpoint for handling the authentication.
-          authURL: "http://localhost:3002/houndifyAuth",
+        // server endpoint for handling the authentication.
+        authURL: "http://localhost:3002/houndifyAuth",
 
-          // Request Info JSON
-          // See https://houndify.com/reference/RequestInfo
-          requestInfo: {
-              UserID: "test_user",
-              Latitude: 37.388309,
-              Longitude: -121.973968,
-          },
+        // Request Info JSON
+        // See https://houndify.com/reference/RequestInfo
+        requestInfo: {
+            UserID: "test_user",
+            Latitude: 37.388309,
+            Longitude: -121.973968,
+        },
 
-          conversationState,
+        conversationState: conversationState,
 
-          // Sample rate of input audio
-          sampleRate: sampleRate,
+        // Sample rate of input audio
+        sampleRate: sampleRate,
 
-          // Enable Voice Activity Detection, default: true
-          enableVAD: true,
+        // Enable Voice Activity Detection, default: true
+        enableVAD: true,
 
-          // Partial transcript, response and error handlers
-          // Partial transcript, response and error handlers
-          onTranscriptionUpdate:  (transcript) => {
-            transcript = transcript.PartialTranscript;
-            this.setState({transcript:transcript})
-            console.log(transcript)
-          },
+        // Partial transcript, response and error handlers
+        // Partial transcript, response and error handlers
+        onTranscriptionUpdate:  (transcript) => {
+          transcript = transcript.PartialTranscript;
+          this.setState({transcript:transcript})
+        },
 
-          onResponse: (response, info) => {
-              recorder.stop();
-              this.setState({
-                Response: response.AllResults[0].WrittenResponseLong,
-                AllResults: response.AllResults[0]
-              });
-              onResponse(response, info);             
-          },
+        onResponse: (response, info) => {
+          recorder.stop();
+          this.setState({
+            Response: response.AllResults[0].WrittenResponseLong,
+            AllResults: response.AllResults[0]
+          });
+          onResponse(response, info)             
+        },
 
-          onError: (err, info) => {
-              recorder.stop();
-              this.setState({
-                isRecording: false,
-                isError: true
-              });
-              onError(err, info);
-          }
+        onError: (err, info) => {
+          recorder.stop();
+          this.setState({
+            isRecording: false,
+            isError: true
+          });
+          onError(err, info)
+        }
       });
 
       return voiceRequest;
     }
-}
+  }
 
-clearState = () => {
-  this.setState({
-    transcript: '',
-    AllResults: ''
-  })
-}
+  clearState = () => {
+    this.setState({
+      transcript: '',
+      AllResults: ''
+    })
+  }
 
-onMicroClick = () => {
-  if (recorder && recorder.isRecording()) {      
+  onMicroClick = () => {
+    if (recorder && recorder.isRecording()) {      
       recorder.stop();
       this.setState({isRecording: false})
       return;
+    }
+    this.clearState();
+    this.setState({
+      isRecording: true,
+      isError: false
+    });
+    recorder.start();
   }
-  this.clearState();
-  this.setState({
-    isRecording: true,
-    isError: false
-  });
-  recorder.start();
-}
 
   render() {
-    console.log(this.state.Response);
     const {AllResults, transcript, isRecording, isError} = this.state;
     return (
       <div className="tc">
         <div className='pa3 pointer dim grow' onClick={()=> this.onMicroClick()}>
-           <MicIcon />
+          <MicIcon />
         </div>
         { isError === false
           ? ( <div>

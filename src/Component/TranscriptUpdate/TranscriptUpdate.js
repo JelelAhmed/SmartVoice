@@ -1,10 +1,10 @@
 import React from 'react';
+import './TranscriptUpdate.css';
 
 const TranscriptUpdate = ({transcript}) => {
-
 	return (
-	  <div className= 'tc bg-light-green fontStyle white dib br2 pa2 bw2 shadow'>
-      	  <h2>{transcript}</h2>
+	  <div className='fix'>
+      <p className='f3'>{transcript}</p>
     </div>
   )
 

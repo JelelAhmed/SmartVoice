@@ -13,26 +13,22 @@ class History extends React.Component {
         this.setState({count: 0});
       } else if (savedResponse.length > count) {
           this.setState({count: count +  1});
-        } 
-      console.log(count);         
-    }
+        }          
+  }
 
 
 
   onPressPreviousButton = () => {
-    const { savedResponse } = this.props;
     const { count } = this.state;
     if (count !== 0) {
       this.setState({count: count - 1});
-      console.log(count)
     }
   }
 
 
 render() {
-  const { onGetHistory, name, savedResponse, searchField}  = this.props;
+  const { onGetHistory, name, savedResponse}  = this.props;
   const { count } = this.state;
-  console.log(savedResponse.length, 'history')
   return (
     <div className=''>
       <p onClick={onGetHistory}
