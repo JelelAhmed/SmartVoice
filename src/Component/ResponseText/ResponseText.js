@@ -1,7 +1,7 @@
 import React from 'react'
-import './ResponseCard.css';
+import './ResponseText.css';
 
-const ResponseCard = ({Response, onSavedResponse, clearResponse}) => {
+const ResponseText = ({Response, onSavedResponse, clearResponse}) => {
 	return ( 
 		<div className='fontStyle box-line white f4'> 
 			<div className='fontStyle pa2'>{Response}</div>
@@ -13,4 +13,4 @@ const ResponseCard = ({Response, onSavedResponse, clearResponse}) => {
 	)
 }
 
-export default ResponseCard;
+export default ResponseText;

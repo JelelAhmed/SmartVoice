@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Houndify from 'houndify';
-import ResponseCard from './Component/ResponseCard/ResponseCard';
+import ResponseText from './Component/ResponseText/ResponseText';
 import SearchBox from './Component/SearchBox/SearchBox';
 import History from './Component/History/History';
 import Rank from './Component/Rank/Rank';
@@ -186,7 +186,7 @@ class TextRequest extends Component {
                             </div>
                           )
                        : (
-                           <ResponseCard
+                           <ResponseText
                              Response={this.state.Response} 
                              clearResponse={this.clearResponse}
                              onSavedResponse={this.onSavedResponse}
