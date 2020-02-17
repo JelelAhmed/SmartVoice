@@ -62,7 +62,7 @@ class VoiceRequest extends Component {
         clientId: "dZtmNkiCT30LvR6Jj2FCvw==",
 
         // server endpoint for handling the authentication.
-        authURL: "http://localhost:3002/houndifyAuth",
+        authURL: "https://guarded-wildwood-71444.herokuapp.com/houndifyAuth",
 
         // Request Info JSON
         // See https://houndify.com/reference/RequestInfo
