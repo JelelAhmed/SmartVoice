@@ -6,4 +6,11 @@
 .dimension {
 	width: 200px;
 	height: 300px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.t-color {
+	font-weight: lighter;
+	color: #ADD8E6;
 }

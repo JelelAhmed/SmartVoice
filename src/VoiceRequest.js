@@ -146,12 +146,12 @@ class VoiceRequest extends Component {
                 <div className='mt4'>
                   { isRecording === true
                     ? ( AllResults === ''
-                        ? <Spinner type={'bars'} color={'grey'}/>
+                        ? <Spinner type={'bars'} color={'#68838B'}/>
                         : <ResponseVoice {...AllResults} Response={this.state.Response}/>    
                       )
                     : <div className='f2'>Click on the microphone to begin recording</div>
                   }
-               </div>
+                </div>
                </div>
               )
           : <div className='f2 white pa4'>

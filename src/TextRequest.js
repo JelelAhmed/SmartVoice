@@ -6,7 +6,6 @@ import History from './Component/History/History';
 import Rank from './Component/Rank/Rank';
 import Spinner from './Component/Spinner/Spinner';
 
-
 class TextRequest extends Component {
 
   state = {
@@ -61,19 +60,19 @@ class TextRequest extends Component {
   };
 
 	onGetHistory = (boolean) => {
+    this.setState({history: boolean});
   	const { id } = this.props.user;
     fetch(`https://guarded-wildwood-71444.herokuapp.com/history/${id}`, {
       method: 'get',
       headers: {'Content-Type': 'application/json'},
     })
     .then(response => response.json())
-    .then(history => {
+    .then(savedResponse => {
       this.setState({
-      	savedResponse: history
+      	savedResponse: savedResponse,
       })
     })
     .catch(console.log)
-    this.setState({history: boolean});
   }
 
 	onSavedResponse =()=> {
@@ -88,9 +87,6 @@ class TextRequest extends Component {
 	      })
 	    })
 	    .then(response => response.json())
-	    .then(saved => {
-	    	console.log(saved, 'saved')
-	    })
 	    .catch(console.log);
 	  };
   }
@@ -175,28 +171,28 @@ class TextRequest extends Component {
                 <SearchBox onChange={this.onChange} initTextRequest={this.initTextRequest}/>
                 <div className=''>
                { isError === false
-                  ? (  Response === ''
-                       ? ( <div> 
-                              { isSearching === true
-                                ? <div className='tc spinner-style'> 
-                                    <Spinner type={'cylon'} color={'grey'}/>
-                                  </div>            
-                                : <div></div>
-                              }
-                            </div>
-                          )
-                       : (
-                           <ResponseText
-                             Response={this.state.Response} 
-                             clearResponse={this.clearResponse}
-                             onSavedResponse={this.onSavedResponse}
-                             />
-                          ) 
+                ? ( Response === ''
+                    ? ( <div> 
+                          { isSearching === true
+                            ? <div className='tc spinner-style'> 
+                                <Spinner type={'cylon'} color={'#68838B'}/>
+                              </div>            
+                            : <div></div>
+                          }
+                        </div>
+                      )
+                    : (
+                        <ResponseText
+                          Response={this.state.Response} 
+                          clearResponse={this.clearResponse}
+                          onSavedResponse={this.onSavedResponse}
+                        />
+                      ) 
                     )
                   : <div className='mt4 pa3'>
-                     <p className='f3 tc orange bold'>Ooops!!! Something went wrong.<br />
-                       {this.errorFeedback(errorMessage)}
-                     </p>
+                      <p className='f3 tc orange bold'>Ooops!!! Something went wrong.<br />
+                        {this.errorFeedback(errorMessage)}
+                      </p>
                     </div>                 
                 }
               </div>

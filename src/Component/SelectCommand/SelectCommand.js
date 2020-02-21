@@ -15,8 +15,7 @@ const SelectCommand = ({onCommandChange, name}) => {
 		<div>	
 			<div className='pa2 white b f3'>{'Welcome!!!'}</div>
 			<div className='white f3 fontStyle'>{`${name}, Please select a command!`}</div> 
-			<div>
-			 	<article className="br ba dark-gray b--black-10 mv4 w-40-l pt4 displayFlex shadow-5 center">
+			<div className='display-flex'>
 				  <Wrapper
 				  	onCommandChange={onCommandChange}
 				  	command={voice} 
@@ -29,7 +28,6 @@ const SelectCommand = ({onCommandChange, name}) => {
 				  	message={textMessage}>
 				  	<TextLogo />
 				  </Wrapper>
-				</article>
 			</div>
 		</div>
 	)
