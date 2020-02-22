@@ -45,7 +45,7 @@ class TextRequest extends Component {
       isSearching: false
     });
 
-    fetch('https://guarded-wildwood-71444.herokuapp.com/queryCount', {
+    fetch('http://localhost:3002/queryCount', {
       method: 'put',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -62,7 +62,7 @@ class TextRequest extends Component {
 	onGetHistory = (boolean) => {
     this.setState({history: boolean});
   	const { id } = this.props.user;
-    fetch(`https://guarded-wildwood-71444.herokuapp.com/history/${id}`, {
+    fetch(`http://localhost:3002/history/${id}`, {
       method: 'get',
       headers: {'Content-Type': 'application/json'},
     })
@@ -77,7 +77,7 @@ class TextRequest extends Component {
 
 	onSavedResponse =()=> {
 	  if (this.state.Response !== '') {
-	    fetch('https://guarded-wildwood-71444.herokuapp.com/saveResponse', {
+	    fetch('http://localhost:3002/saveResponse', {
 	      method: 'post',
 	      headers: {'Content-Type': 'application/json'},
 	      body: JSON.stringify({
@@ -115,7 +115,7 @@ class TextRequest extends Component {
         // for handling the authentication.
         // See SDK's server-side method HoundifyExpress.createAuthenticationHandler().
         // clientKey: "QbRXbiJP9ZSVg13bXa0a3xeD9wz-Tu5ft2afYUYc0zWYHnFlnEW7EFpMWDaFd4Va25mVajfVvjewul_P-7ZoXw==",
-        authURL: "https://guarded-wildwood-71444.herokuapp.com/houndifyAuth",
+        authURL: "http://localhost:3002/houndifyAuth",
         // Request Info JSON
         // See https://houndify.com/reference/RequestInfo
         requestInfo: {
@@ -132,7 +132,7 @@ class TextRequest extends Component {
           
         proxy: {
           method: 'POST',
-          url: "https://guarded-wildwood-71444.herokuapp.com/textSearchProxy",
+          url: "http://localhost:3002/textSearchProxy",
           // headers: {}
           // ... More proxy options will be added as needed
         },
