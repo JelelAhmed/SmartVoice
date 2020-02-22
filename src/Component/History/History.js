@@ -17,8 +17,6 @@ class History extends React.Component {
         }          
   }
 
-
-
   onPressPreviousButton = () => {
     const { count } = this.state;
     if (count !== 0) {
