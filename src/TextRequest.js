@@ -11,7 +11,7 @@ class TextRequest extends Component {
   state = {
 	  searchField: '',
 	  Response: '',      
-	  savedResponse: [],
+	  savedResponse: null,
 	  isSearching: false,
 	  isError: false,
 	  errorMessage: '',
